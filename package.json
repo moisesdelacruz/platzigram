@@ -24,10 +24,12 @@
   },
   "homepage": "https://github.com/moisesdelacruz/platzigram#readme",
   "dependencies": {
+    "empty-element": "^1.0.0",
     "express": "^4.15.2",
     "materialize-css": "^0.98.2",
     "page": "^1.7.1",
-    "pug": "^2.0.0-rc.1"
+    "pug": "^2.0.0-rc.1",
+    "yo-yo": "^1.4.0"
   },
   "devDependencies": {
     "babelify": "^7.3.0",
