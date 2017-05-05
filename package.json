@@ -1,0 +1,35 @@
+{
+  "name": "platzigram",
+  "version": "0.1.0",
+  "description": "Comparte tus fotos estudiando en platzi con el resto de la comunidad.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moisesdelacruz/platzigram.git"
+  },
+  "keywords": [
+    "platzi",
+    "javascript",
+    "platzigram",
+    "curso-definitivo"
+  ],
+  "author": "moisesdelacruz with platzi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/moisesdelacruz/platzigram/issues"
+  },
+  "homepage": "https://github.com/moisesdelacruz/platzigram#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "materialize-css": "^0.98.2",
+    "pug": "^2.0.0-rc.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0"
+  }
+}
