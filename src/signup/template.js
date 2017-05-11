@@ -9,7 +9,7 @@ const signupForm = yo`<div class="col s12 m7">
         <h2>Registrate para ver fotos de tus amigos estudiando en platzi</h2>
         <div class="section">
           <a class="btn btn-fb hide-on-small-only" href="#facebook">Iniciar sesión con Facebook</a>
-          <a class="btn btn-fb hide-on-med-and-up" href="#facebook">Iniciar sesión</a>
+          <a class="btn btn-fb hide-on-med-and-up" href="#facebook"><i class="fa fa-facebook-official"></i> Iniciar sesión</a>
         </div>
         <div class="divider"></div>
         <div class="section">

@@ -1,6 +1,10 @@
 const page = require('page');
+const empty = require('empty-element');
+const template = require('./template');
+const title = require('title');
 
 page('/', (ctx, next) => {
+  title('Platzigram');
   const main = document.getElementById('main-container');
-  main.innerHTML = '<a href="/signup">Signup</a>';
+  empty(main).appendChild(template);
 });
