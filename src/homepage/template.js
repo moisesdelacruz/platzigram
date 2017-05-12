@@ -1,12 +1,16 @@
 const yo = require('yo-yo');
 const layout = require('../layout');
+const picture = require('../picture-card');
 
-const template = yo`<div class="container timeline">
-  <div class="row">
-    <div class="col s12 m10 offset-m1 l6 offset-l3">
-      content
+module.exports = function (pictures) {
+  var el = yo`<div class="container timeline">
+    <div class="row">
+      <div class="col s12 m10 offset-m1 l6 offset-l3">
+        ${pictures.map((pic) => {
+          return picture(pic);
+        })}
+      </div>
     </div>
-  </div>
-</div>`
-
-module.exports = layout(template)
+  </div>`
+  return layout(el)
+}
