@@ -13,18 +13,33 @@ page('/', header, loadPictures, (ctx, next) => {
   empty(main).appendChild(template(ctx.pictures));
 });
 
-// with Axios
+// with Fetch
 function loadPictures (ctx, next) {
-  axios
-    .get('/api/pictures')
+  fetch('/api/pictures')
     .then((res) => {
-      ctx.pictures = res.data;
+      return res.json();
+    })
+    .then((pictures) => {
+      ctx.pictures = pictures;
       next();
     })
     .catch((err) => {
       console.log(err);
     })
 }
+
+// with Axios
+// function loadPictures (ctx, next) {
+//   axios
+//     .get('/api/pictures')
+//     .then((res) => {
+//       ctx.pictures = res.data;
+//       next();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     })
+// }
 
 // with Superagent
 // function loadPictures (ctx, next) {
