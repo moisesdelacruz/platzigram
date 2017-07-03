@@ -2,42 +2,38 @@ const page = require('page');
 const empty = require('empty-element');
 const template = require('./template');
 const title = require('title');
+const request = require('superagent');
+const axios = require('axios');
+const header = require('../header');
 
-page('/', (ctx, next) => {
+page('/', header, loadPictures, (ctx, next) => {
   title('Platzigram');
   const main = document.getElementById('main-container');
 
-  var pictures = [
-    {
-      user: {
-        username: 'christinagrimmie',
-        avatar: 'https://lh3.googleusercontent.com/-Pl7iWsKpcQw/AAAAAAAAAAI/AAAAAAAAAAA/AHalGhoVSE--jr86LIMqaMSMMhJfBrmR8g/s32-c-mo/photo.jpg'
-      },
-      url: 'http://materializecss.com/images/sample-1.jpg',
-      likes: 0,
-      liked: false,
-      createdAt: new Date()
-    },
-    {
-      user: {
-        username: 'moisesdelacruz',
-        avatar: 'https://lh3.googleusercontent.com/-Pl7iWsKpcQw/AAAAAAAAAAI/AAAAAAAAAAA/AHalGhoVSE--jr86LIMqaMSMMhJfBrmR8g/s32-c-mo/photo.jpg'
-      },
-      url: 'http://materializecss.com/images/sample-1.jpg',
-      likes: 1,
-      liked: true,
-      createdAt: new Date().setDate(new Date().getDate() - 10)
-    },
-    {
-      user: {
-        username: 'demilovato',
-        avatar: 'https://lh3.googleusercontent.com/-Pl7iWsKpcQw/AAAAAAAAAAI/AAAAAAAAAAA/AHalGhoVSE--jr86LIMqaMSMMhJfBrmR8g/s32-c-mo/photo.jpg'
-      },
-      url: 'http://materializecss.com/images/sample-1.jpg',
-      likes: 7,
-      liked: true,
-      createdAt: new Date().setDate(new Date().getDate() - 7)
-    }
-  ]
-  empty(main).appendChild(template(pictures));
+  empty(main).appendChild(template(ctx.pictures));
 });
+
+// with Axios
+function loadPictures (ctx, next) {
+  axios
+    .get('/api/pictures')
+    .then((res) => {
+      ctx.pictures = res.data;
+      next();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
+
+// with Superagent
+// function loadPictures (ctx, next) {
+//   request
+//     .get('/api/pictures')
+//     .end((err, res) => {
+//       if (err) return console.log(err);
+//
+//       ctx.pictures = res.body;
+//       next();
+//     });
+// }
