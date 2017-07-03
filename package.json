@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/moisesdelacruz/platzigram#readme",
   "dependencies": {
+    "axios": "^0.16.2",
     "empty-element": "^1.0.0",
     "express": "^4.15.2",
     "intl": "^1.2.5",
@@ -32,6 +33,7 @@
     "materialize-css": "^0.98.2",
     "page": "^1.7.1",
     "pug": "^2.0.0-rc.1",
+    "superagent": "^3.5.2",
     "title": "^1.0.0",
     "yo-yo": "^1.4.0"
   },
