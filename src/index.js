@@ -1,3 +1,4 @@
+require("babel-polyfill");
 const page = require('page');
 
 require('./homepage');

@@ -13,20 +13,30 @@ page('/', header, loadPictures, (ctx, next) => {
   empty(main).appendChild(template(ctx.pictures));
 });
 
-// with Fetch
-function loadPictures (ctx, next) {
-  fetch('/api/pictures')
-    .then((res) => {
-      return res.json();
-    })
-    .then((pictures) => {
-      ctx.pictures = pictures;
-      next();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+// with async await function
+async function loadPictures (ctx, next) {
+  try {
+    ctx.pictures = await fetch('/api/pictures').then(res => res.json());
+    next();
+  } catch (err) {
+    return console.log(err);
+  }
 }
+
+// // with Fetch
+// function loadPictures (ctx, next) {
+//   fetch('/api/pictures')
+//     .then((res) => {
+//       return res.json();
+//     })
+//     .then((pictures) => {
+//       ctx.pictures = pictures;
+//       next();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     })
+// }
 
 // with Axios
 // function loadPictures (ctx, next) {
