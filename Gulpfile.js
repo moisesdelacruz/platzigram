@@ -1,18 +1,17 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
+const livereload = require('gulp-livereload');
 const rename = require('gulp-rename');
 const babelify = require('babelify');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 const watchify = require('watchify');
 
-gulp.task('styles', () => {
-  gulp
-    .src('index.scss')
-    .pipe(sass())
-    .pipe(rename('app.css'))
-    .pipe(gulp.dest('public'));
-});
+gulp.task('styl', () => styl());
+gulp.task('styl:live', () => styl().pipe(livereload({ start: true })))
+gulp.task('styl:watch', ['styl'], () => {
+  return gulp.watch(['./index.scss'], ['styl:live'])
+})
 
 gulp.task('assets', () => {
   gulp
@@ -41,6 +40,14 @@ function compile(watch) {
   }
 
   rebundle()
+}
+
+function styl () {
+  return gulp
+    .src('index.scss')
+    .pipe(sass())
+    .pipe(rename('app.css'))
+    .pipe(gulp.dest('public'));
 }
 
 gulp.task('build', () => { return compile() });
