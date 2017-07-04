@@ -1,4 +1,17 @@
 const express = require('express');
+const multer = require('multer');
+const ext = require('file-extension');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, + Date.now() + '.' + ext(file.originalname))
+  }
+})
+
+const upload = multer({ storage: storage }).single('picture');
 
 const port = 3000
 const app = express();
@@ -55,6 +68,16 @@ app.get('/api/pictures', (req, res) => {
     res.send(pictures);
   }, 2000)
 });
+
+// upload
+app.post('/api/pictures', (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      return res.send(500, "Error uploading file");
+    }
+    res.send('File uploaded');
+  })
+})
 
 app.listen(port, (err) => {
   if (err) console.log(`Server Error: ${err}`), process.exit(1);
