@@ -77,6 +77,47 @@ app.post('/api/pictures', (req, res) => {
   })
 })
 
+// api user
+app.get('/api/user/:username', (req, res) => {
+  const user = {
+    username: 'moisesdelacruz',
+    avatar: 'https://lh3.googleusercontent.com/-Pl7iWsKpcQw/AAAAAAAAAAI/AAAAAAAAAAA/AI6yGXxb4xaYgY0ZgjYFPxTTClmyGpimTA/s360-c-mo/photo.jpg',
+    pictures: [
+      {
+        id: 1,
+        src: 'https://ig-s-d-a.akamaihd.net/hphotos-ak-xta1/t51.2885-15/e35/19121809_1083379801763051_513145976513363968_n.jpg',
+        likes: 76
+      },
+      {
+        id: 2,
+        src: 'https://ig-s-d-a.akamaihd.net/hphotos-ak-xta1/t51.2885-15/e35/19122467_108485429765915_7999280866863874048_n.jpg',
+        likes: 75456
+      },
+      {
+        id: 3,
+        src: 'https://ig-s-c-a.akamaihd.net/hphotos-ak-xta1/t51.2885-15/e35/19228440_1576739362349170_6961720573214851072_n.jpg',
+        likes: 74
+      },
+      {
+        id: 4,
+        src: 'https://ig-s-b-a.akamaihd.net/hphotos-ak-xta1/t51.2885-15/e35/19121547_716980611841893_499119682771484672_n.jpg',
+        likes: 65
+      },
+      {
+        id: 5,
+        src: 'https://ig-s-c-a.akamaihd.net/hphotos-ak-xta1/t51.2885-15/e35/19122071_283526405451990_6801421377137016832_n.jpg',
+        likes: 9
+      }
+    ]
+  }
+  res.send(user);
+})
+
+// user page
+app.get('/:username', (req, res) => {
+  res.render('index', { title: `Platzigram - ${req.params.username}`})
+});
+
 app.listen(port, (err) => {
   if (err) console.log(`Server Error: ${err}`), process.exit(1);
 
