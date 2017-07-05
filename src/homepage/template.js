@@ -57,6 +57,7 @@ module.exports = function (pictures) {
       .send(data)
       .end((err, res) => {
         console.log(arguments);
+        cancel();
       });
   }
   return layout(el)
