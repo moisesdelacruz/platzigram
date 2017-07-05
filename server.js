@@ -119,6 +119,10 @@ app.get('/:username', (req, res) => {
   res.render('index', { title: `Platzigram - ${req.params.username}`})
 });
 
+app.get('/:username/:id', (req, res) => {
+  res.render('index', { title: `Platzigram - ${req.params.username}`})
+});
+
 app.listen(port, (err) => {
   if (err) console.log(`Server Error: ${err}`), process.exit(1);
 

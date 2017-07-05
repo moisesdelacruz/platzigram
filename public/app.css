@@ -6837,8 +6837,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 400px;
-    margin-bottom: 20px;
+    height: 300px;
+    margin-bottom: 5px;
     position: relative; }
     .user-page .picture-container:hover .picture {
       -webkit-filter: blur(5px) grayscale(100%);
@@ -6869,3 +6869,6 @@ body {
     .user-page .picture-container .fa-heart {
       margin-right: 8px;
       display: inline-block; }
+
+.modal .fa-heart {
+  display: inline-block; }

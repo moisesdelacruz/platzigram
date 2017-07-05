@@ -171,8 +171,8 @@ $avatar-size-big: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 400px;
-    margin-bottom: 20px;
+    height: 300px;
+    margin-bottom: 5px;
     position: relative;
 
     &:hover {
@@ -211,5 +211,11 @@ $avatar-size-big: 150px;
       margin-right: 8px;
       display: inline-block;
     }
+  }
+}
+
+.modal {
+  .fa-heart {
+    display: inline-block;
   }
 }
