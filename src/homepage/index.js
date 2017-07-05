@@ -6,12 +6,19 @@ const request = require('superagent');
 const axios = require('axios');
 const header = require('../header');
 
-page('/', header, loadPictures, (ctx, next) => {
+page('/', header, loading, loadPictures, (ctx, next) => {
   title('Platzigram');
   const main = document.getElementById('main-container');
 
   empty(main).appendChild(template(ctx.pictures));
 });
+
+function loading (ctx, next) {
+  var el = document.createElement('div');
+  el.classList.add('loader');
+  document.getElementById('main-container').appendChild(el);
+  next();
+}
 
 // with async await function
 async function loadPictures (ctx, next) {
