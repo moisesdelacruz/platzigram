@@ -7,7 +7,8 @@ module.exports = function (pic) {
   function render (picture) {
     return yo`<div class="card ${picture.liked ? 'liked' : ''}">
       <div class="card-image">
-        <img class="activator" src="${picture.url}" />
+        <img class="activator" src="${picture.url}" ondblclick=${like.bind()}/>
+        <i class="fa fa-heart like-heart ${picture.likedHeart ? 'liked' : ''}" aria-hidden="true"></i>
       </div>
       <div class="card-content">
         <a href="/${picture.user.username}" class="card-title" >
@@ -16,19 +17,32 @@ module.exports = function (pic) {
         </a>
         <small class="right time">${translate.date.format(picture.createdAt)}</small>
         <p>
-          <a href="#" onclick=${like.bind(null, true)} class="left"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-          <a href="#" onclick=${like.bind(null, false)} class="left"><i class="fa fa-heart" aria-hidden="true"></i></a>
+          <a href="#" onclick=${like.bind()} class="left"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+          <a href="#" onclick=${like.bind()} class="left"><i class="fa fa-heart" aria-hidden="true"></i></a>
           <span class="left likes">${translate.message('likes', { likes: picture.likes })}</span>
         </p>
       </div>
     </div>`
   }
 
-  function like (liked) {
-    pic.liked = liked;
-    pic.likes += liked ? 1 : -1;
-    var newEl = render(pic);
-    yo.update(el, newEl);
+  function like (ev) {
+    if (ev.type === "dblclick") {
+      pic.likedHeart = !pic.liked;
+    }
+    pic.liked = !pic.liked;
+    pic.likes += pic.liked ? 1 : -1;
+
+    function doRender () {
+      var newEl = render(pic);
+      yo.update(el, newEl);
+    }
+
+    doRender();
+
+    setTimeout(() => {
+      pic.likedHeart = false;
+      doRender();
+    }, 1000)
     return false;
   }
 
