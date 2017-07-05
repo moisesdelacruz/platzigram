@@ -81,7 +81,7 @@ app.post('/api/pictures', (req, res) => {
 // api user
 app.get('/api/user/:username', (req, res) => {
   const user = {
-    username: 'moisesdelacruz',
+    username: req.params.username,
     avatar: 'https://lh3.googleusercontent.com/-Pl7iWsKpcQw/AAAAAAAAAAI/AAAAAAAAAAA/AI6yGXxb4xaYgY0ZgjYFPxTTClmyGpimTA/s360-c-mo/photo.jpg',
     pictures: [
       {
