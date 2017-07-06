@@ -6,6 +6,7 @@ const request = require('superagent');
 const axios = require('axios');
 const header = require('../header');
 const Webcam = require('webcamjs');
+const picture = require('../picture-card');
 
 page('/', header, loading, loadPictures, (ctx, next) => {
   title('Platzigram');
