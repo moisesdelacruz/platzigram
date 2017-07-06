@@ -24,6 +24,11 @@
     "url": "https://github.com/moisesdelacruz/platzigram/issues"
   },
   "homepage": "https://github.com/moisesdelacruz/platzigram#readme",
+  {
+    "engines" : {
+      "node" : "~6.x"
+    }
+  },
   "dependencies": {
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
