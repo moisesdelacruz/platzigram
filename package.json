@@ -6,7 +6,7 @@
   "scripts": {
     "build": "gulp",
     "uploads-dir": "mkdir -p uploads",
-    "start": "npm run uploads-dir & gulp watch & node server"
+    "start": "npm run uploads-dir & gulp & node server"
   },
   "repository": {
     "type": "git",
@@ -24,10 +24,8 @@
     "url": "https://github.com/moisesdelacruz/platzigram/issues"
   },
   "homepage": "https://github.com/moisesdelacruz/platzigram#readme",
-  {
-    "engines" : {
-      "node" : "~6.x"
-    }
+  "engines" : {
+    "node" : "~6.x"
   },
   "dependencies": {
     "axios": "^0.16.2",

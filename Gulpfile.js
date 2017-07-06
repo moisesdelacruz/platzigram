@@ -20,7 +20,7 @@ gulp.task('assets', () => {
 });
 
 function compile(watch) {
-  var bundle = watchify(browserify('./src/index.js'))
+  var bundle = browserify('./src/index.js')
 
   function rebundle() {
     bundle
@@ -33,6 +33,8 @@ function compile(watch) {
   }
 
   if (watch) {
+    bundle = watchify(bundle);
+    
     bundle.on('update', () => {
       console.log('--> Bundling...');
       rebundle();
@@ -53,4 +55,4 @@ function styl () {
 gulp.task('build', () => { return compile() });
 gulp.task('watch', () => { return compile(true) });
 
-gulp.task('default', ['styles', 'assets', 'build']);
+gulp.task('default', ['styl', 'assets', 'build']);
