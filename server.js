@@ -1,15 +1,29 @@
 const express = require('express');
 const multer = require('multer');
 const ext = require('file-extension');
+const config = require('./config');
+const multer_gcloud = require('multer-gcloud');
 
-const storage = multer.diskStorage({
+var gcloud = require('@google-cloud/storage')({
+  projectId: config.projectId,
+  keyFilename: './Platzigram-20147ef35052.json'
+});
+
+var bucket = gcloud.bucket(config.storageBucket);
+
+const storage = multer_gcloud({
+  storage_bucket: config.storageBucket,
+  bucket: bucket,
+  metadata: function (req, file, cb) {
+    cb(null, file.mimetype);
+  },
   destination: function (req, file, cb) {
-    cb(null, './uploads')
+    cb(null, 'uploads');
   },
   filename: function (req, file, cb) {
-    cb(null, + Date.now() + '.' + ext(file.originalname))
+    cb(null, + Date.now() + '.' + ext(file.originalname));
   }
-})
+});
 
 const upload = multer({ storage: storage }).single('picture');
 

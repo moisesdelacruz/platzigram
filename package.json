@@ -6,7 +6,8 @@
   "scripts": {
     "build": "gulp",
     "uploads-dir": "mkdir -p uploads",
-    "start": "npm run uploads-dir & gulp & node server"
+    "server": "./env.sh & node server",
+    "start": "npm run uploads-dir & gulp & npm run server"
   },
   "repository": {
     "type": "git",
@@ -24,10 +25,11 @@
     "url": "https://github.com/moisesdelacruz/platzigram/issues"
   },
   "homepage": "https://github.com/moisesdelacruz/platzigram#readme",
-  "engines" : {
-    "node" : "~6.x"
+  "engines": {
+    "node": "~6.x"
   },
   "dependencies": {
+    "@google-cloud/storage": "^1.2.0",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
     "empty-element": "^1.0.0",
@@ -38,6 +40,7 @@
     "intl-relativeformat": "^1.3.0",
     "materialize-css": "^0.98.2",
     "multer": "^1.3.0",
+    "multer-gcloud": "^0.1.1",
     "page": "^1.7.1",
     "pug": "^2.0.0-rc.1",
     "superagent": "^3.5.2",
