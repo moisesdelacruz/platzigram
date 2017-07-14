@@ -7,8 +7,9 @@ const axios = require('axios');
 const header = require('../header');
 const Webcam = require('webcamjs');
 const picture = require('../picture-card');
+const utils = require('../utils');
 
-page('/', header, loading, loadPictures, (ctx, next) => {
+page('/', utils.loadAuth, header, loading, loadPictures, (ctx, next) => {
   title('Platzigram');
   const main = document.getElementById('main-container');
 

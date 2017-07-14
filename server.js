@@ -85,6 +85,12 @@ app.post('/login', passport.authenticate('local', {
   failureRedirect: '/signin'
 }));
 
+app.get('/logout', (req, res) => {
+  req.logout();
+
+  res.redirect('/');
+});
+
 app.get('/auth/facebook', passport.authenticate('facebook', {
   scope: 'email'
 }));
@@ -101,6 +107,14 @@ function ensureAuth (req, res, next) {
 
   return res.status(401).send({ error: 'not authenticated' });
 }
+
+app.get('/whoami', (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.json(req.user);
+  }
+
+  res.json({ auth: false });
+});
 
 // Api
 app.get('/api/pictures', (req, res) => {

@@ -3,12 +3,13 @@ import header from '../header'
 import title from 'title'
 import empty from 'empty-element'
 import template from './template'
+import utils from '../utils'
 
-page('/:username', header, loadUser, (ctx, next) => {
+page('/:username', utils.loadAuth, header, loadUser, (ctx, next) => {
   renderUserPage(ctx);
 });
 
-page('/:username/:id', header, loadUser, (ctx, next) => {
+page('/:username/:id', utils.loadAuth, header, loadUser, (ctx, next) => {
   renderUserPage(ctx);
   $(`#modal${ctx.params.id}`).modal('open');
 });

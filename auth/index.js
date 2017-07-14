@@ -43,7 +43,7 @@ exports.facebookStrategy = new FacebookStrategy({
       if (e) return done(e);
 
       user.token = token;
-      
+
       return done(null, user);
     });
 
