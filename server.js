@@ -9,7 +9,7 @@ const passport = require('passport');
 const platzigram = require('platzigram-client');
 const auth = require('./auth');
 const config = require('./config');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5050;
 
 const client = platzigram.createClient(config.client);
 
@@ -53,6 +53,7 @@ app.set('view engine', 'pug');
 app.use(express.static('public'));
 
 passport.use(auth.localStrategy);
+passport.use(auth.facebookStrategy);
 passport.deserializeUser(auth.deserializeUser);
 passport.serializeUser(auth.serializeUser);
 
@@ -83,6 +84,15 @@ app.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/signin'
 }));
+
+app.get('/auth/facebook', passport.authenticate('facebook', {
+  scope: 'email'
+}));
+
+app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  successRedirect: '/',
+  failureRedirect: '/signin'
+}))
 
 function ensureAuth (req, res, next) {
   if (req.isAuthenticated()) {
@@ -186,7 +196,10 @@ app.get('/:username/:id', (req, res) => {
 });
 
 app.listen(port, (err) => {
-  if (err) console.log(`Server Error: ${err}`), process.exit(1);
+  if (err) {
+    console.error(`Server Error: ${err}`);
+    process.exit(1);
+  }
 
   console.log(`Platzigram listen in port: ${port}`);
 })
