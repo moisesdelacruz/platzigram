@@ -1,18 +1,27 @@
 const express = require('express');
 const multer = require('multer');
 const ext = require('file-extension');
-const config = require('./config');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const expressSession = require('express-session');
 const multer_gcloud = require('multer-gcloud');
+const passport = require('passport');
+const platzigram = require('platzigram-client');
+const auth = require('./auth');
+const config = require('./config');
+const port = process.env.PORT || 3000;
+
+const client = platzigram.createClient(config.client);
 
 var gcloud = require('@google-cloud/storage')({
-  projectId: config.projectId,
-  keyFilename: './Platzigram-20147ef35052.json'
+  projectId: config.firebase.projectId,
+  keyFilename: config.platzigramJsonFile
 });
 
-var bucket = gcloud.bucket(config.storageBucket);
+var bucket = gcloud.bucket(config.firebase.storageBucket);
 
 const storage = multer_gcloud({
-  storage_bucket: config.storageBucket,
+  storage_bucket: config.firebase.storageBucket,
   bucket: bucket,
   metadata: function (req, file, cb) {
     cb(null, file.mimetype);
@@ -27,12 +36,25 @@ const storage = multer_gcloud({
 
 const upload = multer({ storage: storage }).single('picture');
 
-const port = 3000
 const app = express();
 
-app.set('view engine', 'pug');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(expressSession({
+  secret: config.secret,
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
+app.set('view engine', 'pug');
 app.use(express.static('public'));
+
+passport.use(auth.localStrategy);
+passport.deserializeUser(auth.deserializeUser);
+passport.serializeUser(auth.serializeUser);
 
 app.get('/', (req, res) => {
   res.render('index', { title: 'Platzigram'})
@@ -40,9 +62,35 @@ app.get('/', (req, res) => {
 app.get('/signup', (req, res) => {
   res.render('index', { title: 'Platzigram - Signup'})
 });
+
+app.post('/signup', (req, res) => {
+  var user = req.body;
+  client.saveUser(user, (err, usr) => {
+    if (err) {
+      console.log(typeof user);
+      console.log(user);
+      return res.status(500).send(err.message);
+    }
+
+    res.redirect('/signin');
+  })
+})
 app.get('/signin', (req, res) => {
   res.render('index', { title: 'Platzigram - Signin'})
 });
+
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/signin'
+}));
+
+function ensureAuth (req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+
+  return res.status(401).send({ error: 'not authenticated' });
+}
 
 // Api
 app.get('/api/pictures', (req, res) => {
@@ -83,7 +131,7 @@ app.get('/api/pictures', (req, res) => {
 });
 
 // upload
-app.post('/api/pictures', (req, res) => {
+app.post('/api/pictures', ensureAuth, (req, res) => {
   upload(req, res, (err) => {
     if (err) {
       return res.send(500, "Error uploading file");
