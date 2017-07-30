@@ -24,7 +24,7 @@ const config = {
     }
   },
   secret: process.env.PLATZIGRAM_SECRET || 'pl4tzi',
-  platzigramJsonFile: process.env.PLATZIGRAM_FIREBASE_JSON_FILE || './Platzigram-20147ef35052.json'
+  platzigramJsonFile: process.env.PLATZIGRAM_FIREBASE_JSON_FILE || './Platzigram-7f712a6a2e77.json'
 }
 
 if (process.env.NODE_ENV !== 'production') {
