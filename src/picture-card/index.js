@@ -7,19 +7,19 @@ module.exports = function (pic) {
   function render (picture) {
     return yo`<div class="card ${picture.liked ? 'liked' : ''}">
       <div class="card-image">
-        <img class="activator" src="${picture.url}" ondblclick=${like.bind()}/>
+        <img class="activator" src="${picture.src}" ondblclick=${like.bind()}/>
         <i class="fa fa-heart like-heart ${picture.likedHeart ? 'liked' : ''}" aria-hidden="true"></i>
       </div>
       <div class="card-content">
         <a href="/${picture.user.username}" class="card-title" >
           <img src="${picture.user.avatar}" class="avatar" />
-          <span class="username">${picture.user.username}</span>
+          <span class="username">${picture.user.name}</span>
         </a>
-        <small class="right time">${translate.date.format(picture.createdAt)}</small>
+        <small class="right time">${translate.date.format(new Date(picture.createdAt).getTime())}</small>
         <p>
           <a href="#" onclick=${like.bind()} class="left"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
           <a href="#" onclick=${like.bind()} class="left"><i class="fa fa-heart" aria-hidden="true"></i></a>
-          <span class="left likes">${translate.message('likes', { likes: picture.likes })}</span>
+          <span class="left likes">${translate.message('likes', { likes: picture.likes || 0 })}</span>
         </p>
       </div>
     </div>`

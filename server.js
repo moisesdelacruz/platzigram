@@ -118,51 +118,37 @@ app.get('/whoami', (req, res) => {
 
 // Api
 app.get('/api/pictures', (req, res) => {
-  var pictures = [
-    {
-      user: {
-        username: 'christinagrimmie',
-        avatar: 'https://lh3.googleusercontent.com/-Pl7iWsKpcQw/AAAAAAAAAAI/AAAAAAAAAAA/AHalGhoVSE--jr86LIMqaMSMMhJfBrmR8g/s32-c-mo/photo.jpg'
-      },
-      url: 'http://materializecss.com/images/sample-1.jpg',
-      likes: 0,
-      liked: false,
-      createdAt: new Date().getTime()
-    },
-    {
-      user: {
-        username: 'moisesdelacruz',
-        avatar: 'https://lh3.googleusercontent.com/-Pl7iWsKpcQw/AAAAAAAAAAI/AAAAAAAAAAA/AHalGhoVSE--jr86LIMqaMSMMhJfBrmR8g/s32-c-mo/photo.jpg'
-      },
-      url: 'http://materializecss.com/images/sample-1.jpg',
-      likes: 1,
-      liked: true,
-      createdAt: new Date().setDate(new Date().getDate() - 10)
-    },
-    {
-      user: {
-        username: 'demilovato',
-        avatar: 'https://lh3.googleusercontent.com/-Pl7iWsKpcQw/AAAAAAAAAAI/AAAAAAAAAAA/AHalGhoVSE--jr86LIMqaMSMMhJfBrmR8g/s32-c-mo/photo.jpg'
-      },
-      url: 'http://materializecss.com/images/sample-1.jpg',
-      likes: 7,
-      liked: true,
-      createdAt: new Date().setDate(new Date().getDate() - 7)
-    }
-  ]
+  client.listPictures((err, pictures) => {
+    if (err) return res.send([]);
 
-  setTimeout(() => res.send(pictures), 2000);
+    res.send(pictures);
+  });
 });
 
-// upload
 app.post('/api/pictures', ensureAuth, (req, res) => {
   upload(req, res, (err) => {
     if (err) {
-      return res.send(500, "Error uploading file");
+      return res.status(500).send(`Error uploading file: ${err.message}`);
     }
-    res.send('File uploaded');
-  })
-})
+
+    var user = req.user;
+    var token = req.user.token;
+    var username = req.user.username;
+    var src = req.file.location;
+    client.savePicture({
+      src: src,
+      userId: username,
+      user: {
+        username: username,
+        avatar: user.avatar,
+        name: user.name
+      }
+    }, token, (err, img) => {
+      if (err) return res.status(500).send(err.message);
+      return res.send(`File uploaded: ${req.file.location}`);
+    });
+  });
+});
 
 // api user
 app.get('/api/user/:username', (req, res) => {
