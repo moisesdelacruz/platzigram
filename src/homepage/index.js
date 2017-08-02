@@ -7,7 +7,10 @@ const axios = require('axios');
 const header = require('../header');
 const Webcam = require('webcamjs');
 const picture = require('../picture-card');
+const io = require('socket.io-client');
 const utils = require('../utils');
+
+const socket = io.connect('http://localhost:5151');
 
 page('/', utils.loadAuth, header, loading, loadPictures, (ctx, next) => {
   title('Platzigram');
@@ -65,6 +68,13 @@ page('/', utils.loadAuth, header, loading, loadPictures, (ctx, next) => {
       Webcam.reset();
     }
   });
+});
+
+socket.on('image', image => {
+  var picturesEl = document.getElementById('picture-cards');
+  var first = picturesEl.firstChild;
+  var img = picture(image);
+  picturesEl.insertBefore(img, first);
 });
 
 function loading (ctx, next) {
