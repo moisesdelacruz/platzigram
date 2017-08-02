@@ -14,8 +14,8 @@ export default function userPageTemplate (user) {
             />
           </div>
           <div class="col s12 m10 offset-m1 l6 left-align">
-            <h2 class="hide-on-large-only center-align">${user.username}</h2>
-            <h2 class="hide-on-med-and-down center-align">${user.username}</h2>
+            <h2 class="hide-on-large-only center-align">${user.name}</h2>
+            <h2 class="hide-on-med-and-down center-align">${user.name}</h2>
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@ export default function userPageTemplate (user) {
               <div class="modal-footer">
                 <div class="btn btn-flat likes">
                   <i class="fa fa-heart" aria-hidden=true></i>
-                  ${translate.message('likes', { likes: picture.likes })}
+                  ${translate.message('likes', { likes: picture.likes || 0 })}
                 </div>
               </div>
             </div>
