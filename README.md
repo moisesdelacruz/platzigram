@@ -32,8 +32,8 @@ This app is a Instagram copy created with educational purposes.
   FACEBOOK_CLIENT_SECRET
 
   # Other
-  PLATZIGRAM_SECRET="";
-  PLATZIGRAM_FIREBASE_JSON_FILE=""
+  PLATZIGRAM_SECRET="pl4tzi";
+  PLATZIGRAM_FIREBASE_JSON_FILE="<path/to/your/firebase_key.json>"
   NODE_ENV="dev"
 ```
 
